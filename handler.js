@@ -1,5 +1,7 @@
 'use strict';
 
+const MOMENT = require('moment');
+
 module.exports.hello = async event => {
   return {
     statusCode: 200,
@@ -20,7 +22,10 @@ module.exports.hello = async event => {
 module.exports.auth = async event => {
   return {
     statusCode: 200,
-    body: JSON.stringify({"hello":"world"}, null, 2)
+    body: JSON.stringify({
+      hello:"world",
+      time: MOMENT().format("Do MMMM YYYY, h:mm:ss a")
+    }, null, 2)
   };
 
   // Use this code if you don't use the http event with the LAMBDA-PROXY integration

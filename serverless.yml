@@ -54,9 +54,15 @@ provider:
 #  include:
 #    - include-me.js
 #    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
+  exclude:
+    - layers/**
+    - .gitignore
+    - serverless.yml
+
+layers:
+  nodeLibs:
+    path: layers
+    description: content of node_modules directory
 
 resources:
   Resources:
@@ -77,6 +83,8 @@ resources:
 functions:
   hello:
     handler: handler.hello
+    layers:
+      - {Ref: NodeLibsLambdaLayer}
     events:
       - http:
           path: hello
@@ -87,6 +95,8 @@ functions:
               Ref: ApiGatewayAuthorizer
   auth:
     handler: handler.auth
+    layers:
+      - {Ref: NodeLibsLambdaLayer}
     events:
       - http:
           path: auth
