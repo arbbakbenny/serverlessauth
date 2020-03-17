@@ -66,8 +66,35 @@ layers:
 
 resources:
   Resources:
+    CognitoDomain:
+      Type: AWS::Cognito::UserPoolDomain
+      Properties:
+        Domain: helloworld
+        UserPoolId:
+          Ref: CognitoUserPoolMyUserPool
     CognitoUserPoolMyUserPool:
       Type: AWS::Cognito::UserPool
+    CognitoUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpoolclient.html
+      Properties:
+        ClientName: user-pool-client1
+        UserPoolId:
+          Ref: CognitoUserPoolMyUserPool
+        ExplicitAuthFlows:
+          - ADMIN_NO_SRP_AUTH
+        GenerateSecret: false
+        SupportedIdentityProviders:
+          - COGNITO
+        AllowedOAuthFlows:
+          - implicit
+        AllowedOAuthScopes:
+          - phone
+          - email
+          - openid
+          - profile
+          - aws.cognito.signin.user.admin
+        CallbackURLs:
+          - https://www.google.com
     ApiGatewayAuthorizer:
       Type: AWS::ApiGateway::Authorizer
       Properties:
