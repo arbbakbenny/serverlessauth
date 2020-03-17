@@ -3,7 +3,7 @@ service: auth-test
 
 custom:
   callbackuri: https://www.google.com
-  pool-domain: helloworld
+  pool-domain: randomhelloworlddomain
 
 provider:
   name: aws
@@ -17,6 +17,7 @@ package:
     - layers/**
     - .gitignore
     - serverless.yml
+    - README.md
 
 layers:
   nodeLibs:
@@ -40,7 +41,8 @@ resources:
         UserPoolId:
           Ref: CognitoUserPoolMyUserPool
         ExplicitAuthFlows:
-          - ADMIN_NO_SRP_AUTH
+          - ALLOW_USER_PASSWORD_AUTH
+          - ALLOW_REFRESH_TOKEN_AUTH
         GenerateSecret: false
         SupportedIdentityProviders:
           - COGNITO
