@@ -2,8 +2,8 @@
 service: auth-test
 
 custom:
-  callbackuri: https://www.google.com
-  pool-domain: randomhelloworlddomain
+  callbackuri: #POPULATE ME
+  pool-domain: #POPULATE ME
 
 provider:
   name: aws
@@ -38,11 +38,15 @@ resources:
       Type: AWS::Cognito::UserPoolClient # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpoolclient.html
       Properties:
         ClientName: user-pool-client
+        AllowedOAuthFlowsUserPoolClient: true # this looks like it is required so user can change their password
         UserPoolId:
           Ref: CognitoUserPoolMyUserPool
         ExplicitAuthFlows:
+          - ALLOW_ADMIN_USER_PASSWORD_AUTH
           - ALLOW_USER_PASSWORD_AUTH
+          - ALLOW_USER_SRP_AUTH
           - ALLOW_REFRESH_TOKEN_AUTH
+        PreventUserExistenceErrors: ENABLED
         GenerateSecret: false
         SupportedIdentityProviders:
           - COGNITO

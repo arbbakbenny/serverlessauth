@@ -6,6 +6,8 @@ This is an example of serverless-framework setup which sets up Cognito user pool
 # How to deploy
 1. Do `npm install` within `./layers/nodejs` directory
 2. Edit `serverless.yml` for empty values
+* callbackuri: #POPULATE ME
+* pool-domain: #POPULATE ME
 3. Return to project root and do `serverless deploy`
 
 # After deployment
